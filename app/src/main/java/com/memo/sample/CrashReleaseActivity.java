@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.memo.crashhunter.CrashHunter;
+import com.memo.crashhunter.CrashInfo;
+
 
 /**
  * title:

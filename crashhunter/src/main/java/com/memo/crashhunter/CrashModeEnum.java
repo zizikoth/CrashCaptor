@@ -1,4 +1,4 @@
-package com.memo.sample;
+package com.memo.crashhunter;
 
 /**
  * title:

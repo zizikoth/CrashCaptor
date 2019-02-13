@@ -1,10 +1,12 @@
-package com.memo.sample;
+package com.memo.crashhunter;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+
+import com.memo.hunter.R;
 
 /**
  * title:崩溃展示界面

@@ -2,6 +2,9 @@ package com.memo.sample;
 
 import android.app.Application;
 
+import com.memo.crashhunter.CrashHunter;
+import com.memo.crashhunter.CrashModeEnum;
+
 /**
  * title:Application
  * describe:
@@ -17,7 +20,7 @@ public class App extends Application {
         CrashHunter.init(this)
                 .setCrashMode(CrashModeEnum.MODE_CRASH_SHOW_DEBUG_AND_RELEASE)
                 .setReleaseActivity(CrashReleaseActivity.class)
-                .isDebug(false);
+                .isDebug(BuildConfig.DEBUG);
     }
 
 }

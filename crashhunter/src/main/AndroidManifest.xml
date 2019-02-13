@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.memo.sample">
+    package="com.memo.hunter">
 
     <application android:theme="@style/AppTheme">
-        <activity android:name="com.memo.sample.CrashActivity" />
+        <activity android:name="com.memo.crashhunter.CrashActivity" />
     </application>
 </manifest>
