@@ -1,0 +1,7 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.memo.sample">
+
+    <application android:theme="@style/AppTheme">
+        <activity android:name="com.memo.sample.CrashActivity" />
+    </application>
+</manifest>
