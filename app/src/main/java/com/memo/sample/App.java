@@ -14,12 +14,14 @@ import com.memo.crashhunter.CrashModeEnum;
  */
 public class App extends Application {
 
+    public static int OPEN_NUM = 0;
+
     @Override
     public void onCreate() {
         super.onCreate();
         CrashHunter.init(this)
                 .setCrashMode(CrashModeEnum.MODE_CRASH_SHOW_DEBUG_AND_RELEASE)
-                .setReleaseActivity(CrashReleaseActivity.class)
+                .setReleaseCrashActivity(CrashReleaseActivity.class)
                 .isDebug(BuildConfig.DEBUG);
     }
 

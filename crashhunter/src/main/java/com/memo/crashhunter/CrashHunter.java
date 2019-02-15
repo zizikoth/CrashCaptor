@@ -1,14 +1,14 @@
 package com.memo.crashhunter;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Stack;
 
 /**
  * title:崩溃捕捉者
@@ -22,12 +22,18 @@ public class CrashHunter implements Thread.UncaughtExceptionHandler {
     /**
      * 当前实例
      */
-    @SuppressLint("StaticFieldLeak") private static CrashHunter INSTANCE = new CrashHunter();
+    private static CrashHunter INSTANCE;
 
     /**
      * ApplicationContext
      */
-    @SuppressLint("StaticFieldLeak") private static Context mContext;
+    private static Application mApplication;
+
+    /**
+     * 存放Activity的栈
+     */
+    private static Stack<Activity> mActivityStack;
+
     /**
      * 传递的Intent的Key
      */
@@ -45,7 +51,7 @@ public class CrashHunter implements Thread.UncaughtExceptionHandler {
     /**
      * 自己写的线上展示的页面
      */
-    private Class<? extends Activity> releaseActivity;
+    private Class<? extends Activity> releaseCrashActivity;
     /**
      * 是否是测试模式
      */
@@ -54,9 +60,52 @@ public class CrashHunter implements Thread.UncaughtExceptionHandler {
     /**
      * 私有化实例
      */
-    private CrashHunter() {
+    private CrashHunter(Application application) {
+        mApplication = application;
+        mActivityStack = new Stack<>();
         Thread.setDefaultUncaughtExceptionHandler(this);
+        //通过注册生命周期让所有的页面退出 除了自定义的CrashActivity 和线上展示的崩溃界面
+        mApplication.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                if (activity.getClass() != CrashActivity.class ||
+                        activity.getClass() != releaseCrashActivity) {
+                    mActivityStack.add(activity);
+                }
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+                mActivityStack.remove(activity);
+            }
+        });
     }
+
 
     /**
      * 初始化
@@ -65,7 +114,9 @@ public class CrashHunter implements Thread.UncaughtExceptionHandler {
      * @return 当前实例 INSTANCE
      */
     public static CrashHunter init(Application application) {
-        mContext = application.getApplicationContext();
+        if (INSTANCE == null) {
+            INSTANCE = new CrashHunter(application);
+        }
         return INSTANCE;
     }
 
@@ -115,13 +166,13 @@ public class CrashHunter implements Thread.UncaughtExceptionHandler {
     /**
      * 设置线上展示的Activity
      *
-     * @param releaseActivity 线上展示的Activity
-     *                        可以配合CrashCaptor.getCrashInfo(getIntent())来返回CrashInfo
-     *                        注意判空
+     * @param releaseCrashActivity 线上展示的Activity
+     *                             可以配合CrashCaptor.getCrashInfo(getIntent())来返回CrashInfo
+     *                             注意判空
      * @return 当前实例 INSTANCE
      */
-    public CrashHunter setReleaseActivity(Class<? extends Activity> releaseActivity) {
-        this.releaseActivity = releaseActivity;
+    public CrashHunter setReleaseCrashActivity(Class<? extends Activity> releaseCrashActivity) {
+        this.releaseCrashActivity = releaseCrashActivity;
         return this;
     }
 
@@ -131,8 +182,8 @@ public class CrashHunter implements Thread.UncaughtExceptionHandler {
         Class<? extends Activity> clazz = CrashActivity.class;
         switch (crashModeEnum) {
             case MODE_CRASH_SHOW_DEBUG_AND_RELEASE:
-                if (!isDebug && releaseActivity != null) {
-                    clazz = releaseActivity;
+                if (!isDebug && releaseCrashActivity != null) {
+                    clazz = releaseCrashActivity;
                 }
                 navigation(clazz, info);
                 break;
@@ -143,8 +194,9 @@ public class CrashHunter implements Thread.UncaughtExceptionHandler {
                 }
                 break;
         }
-
+        finishAllActivity();
         android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(0);
     }
 
     /**
@@ -183,16 +235,28 @@ public class CrashHunter implements Thread.UncaughtExceptionHandler {
     }
 
     /**
+     * 关闭所有Activity
+     */
+    private void finishAllActivity() {
+        for (Activity activity : mActivityStack) {
+            if (!activity.isFinishing()) {
+                activity.finish();
+            }
+        }
+        mActivityStack.clear();
+    }
+
+    /**
      * 跳转页面
      *
      * @param clazz 跳转的页面
      * @param info  崩溃信息
      */
     private void navigation(Class<? extends Activity> clazz, CrashInfo info) {
-        Intent intent = new Intent(mContext, clazz);
+        Intent intent = new Intent(mApplication.getApplicationContext(), clazz);
         intent.putExtra(CrashHunter.CRASH, info);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mContext.startActivity(intent);
+        mApplication.getApplicationContext().startActivity(intent);
     }
 
 }
