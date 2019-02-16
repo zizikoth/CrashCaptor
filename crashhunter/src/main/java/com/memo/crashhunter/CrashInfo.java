@@ -17,6 +17,41 @@ import java.text.SimpleDateFormat;
  */
 public class CrashInfo implements Parcelable {
 
+    /**
+     * 崩溃主信息
+     */
+    private String exceptionMsg;
+
+    /**
+     * 崩溃类名
+     */
+    private String className;
+
+    /**
+     * 崩溃文件名
+     */
+    private String fileName;
+
+    /**
+     * 崩溃方法
+     */
+    private String methodName;
+
+    /**
+     * 崩溃行数
+     */
+    private int lineNumber;
+
+    /**
+     * 崩溃类型
+     */
+    private String exceptionType;
+
+    /**
+     * 全部信息
+     */
+    private String fullException;
+
     public static final Creator<CrashInfo> CREATOR = new Creator<CrashInfo>() {
         @Override
         public CrashInfo createFromParcel(Parcel source) {return new CrashInfo(source);}
@@ -24,52 +59,22 @@ public class CrashInfo implements Parcelable {
         @Override
         public CrashInfo[] newArray(int size) {return new CrashInfo[size];}
     };
-    /**
-     * 崩溃主信息
-     */
-    private String exceptionMsg;
-    /**
-     * 崩溃类名
-     */
-    private String className;
-    /**
-     * 崩溃文件名
-     */
-    private String fileName;
-    /**
-     * 崩溃方法
-     */
-    private String methodName;
-    /**
-     * 崩溃行数
-     */
-    private int lineNumber;
-    /**
-     * 崩溃类型
-     */
-    private String exceptionType;
-    /**
-     * 全部信息
-     */
-    private String fullException;
-    /**
-     * 崩溃时间
-     */
-    @SuppressLint("SimpleDateFormat")
-    private String time =
-            new SimpleDateFormat("yyyy-MM-dd HH:mm").format(System.currentTimeMillis());
+
     /**
      * 设备名
      */
     private String model = Build.MODEL;
+
     /**
      * 设备厂商
      */
     private String brand = Build.BRAND;
     /**
-     * 系统版本号
+     * 崩溃时间
      */
-    private String version = String.valueOf(Build.VERSION.SDK_INT);
+    @SuppressLint("SimpleDateFormat")
+    private String time =
+            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(System.currentTimeMillis());
 
     CrashInfo() {}
 
@@ -154,6 +159,11 @@ public class CrashInfo implements Parcelable {
                 "系统版本: " + this.getVersion() + "\n\n" +
                 "全部信息: " + "\n" + this.getFullException() + "\n";
     }
+
+    /**
+     * 系统版本号
+     */
+    private String version = "Api " + String.valueOf(Build.VERSION.SDK_INT);
 
     @Override
     public int describeContents() { return 0; }
