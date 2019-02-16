@@ -52,14 +52,6 @@ public class CrashInfo implements Parcelable {
      */
     private String fullException;
 
-    public static final Creator<CrashInfo> CREATOR = new Creator<CrashInfo>() {
-        @Override
-        public CrashInfo createFromParcel(Parcel source) {return new CrashInfo(source);}
-
-        @Override
-        public CrashInfo[] newArray(int size) {return new CrashInfo[size];}
-    };
-
     /**
      * 设备名
      */
@@ -69,6 +61,7 @@ public class CrashInfo implements Parcelable {
      * 设备厂商
      */
     private String brand = Build.BRAND;
+
     /**
      * 崩溃时间
      */
@@ -76,21 +69,15 @@ public class CrashInfo implements Parcelable {
     private String time =
             new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(System.currentTimeMillis());
 
-    CrashInfo() {}
+    public static final Creator<CrashInfo> CREATOR = new Creator<CrashInfo>() {
+        @Override
+        public CrashInfo createFromParcel(Parcel source) {return new CrashInfo(source);}
 
-    private CrashInfo(Parcel in) {
-        this.exceptionMsg = in.readString();
-        this.className = in.readString();
-        this.fileName = in.readString();
-        this.methodName = in.readString();
-        this.lineNumber = in.readInt();
-        this.exceptionType = in.readString();
-        this.fullException = in.readString();
-        this.time = in.readString();
-        this.model = in.readString();
-        this.brand = in.readString();
-        this.version = in.readString();
-    }
+        @Override
+        public CrashInfo[] newArray(int size) {return new CrashInfo[size];}
+    };
+
+    CrashInfo() {}
 
     public String getExceptionMsg() { return exceptionMsg; }
 
@@ -159,11 +146,24 @@ public class CrashInfo implements Parcelable {
                 "系统版本: " + this.getVersion() + "\n\n" +
                 "全部信息: " + "\n" + this.getFullException() + "\n";
     }
-
     /**
      * 系统版本号
      */
     private String version = "Api " + String.valueOf(Build.VERSION.SDK_INT);
+
+    private CrashInfo(Parcel in) {
+        this.exceptionMsg = in.readString();
+        this.className = in.readString();
+        this.fileName = in.readString();
+        this.methodName = in.readString();
+        this.lineNumber = in.readInt();
+        this.exceptionType = in.readString();
+        this.fullException = in.readString();
+        this.time = in.readString();
+        this.model = in.readString();
+        this.brand = in.readString();
+        this.version = in.readString();
+    }
 
     @Override
     public int describeContents() { return 0; }
