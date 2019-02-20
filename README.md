@@ -50,9 +50,9 @@ Step 2.注意版本号
 Step 3. 在Application中初始化
 ```
         CrashHunter.init(this)
-                .setCrashMode(CrashModeEnum.MODE_CRASH_SHOW_DEBUG_AND_RELEASE)
-                .setReleaseCrashActivity(CrashReleaseActivity.class)
-                .isDebug(BuildConfig.DEBUG);
+                .setCrashMode(CrashModeEnum.MODE_CRASH_SHOW_DEBUG_AND_RELEASE)//非必须 和下方对应
+                .setReleaseCrashActivity(CrashReleaseActivity.class)//非必须 和上方对应
+                .isDebug(BuildConfig.DEBUG);//必须 默认为不显示崩溃界面
 ```
 ### 七.详细代码
 [由于代码还是比较简单，就不贴出来了，放个Github网址：CrashHunter](https://github.com/zmemo/CrashHunter)
