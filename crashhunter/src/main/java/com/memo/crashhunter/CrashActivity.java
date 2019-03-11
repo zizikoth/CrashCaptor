@@ -3,6 +3,7 @@ package com.memo.crashhunter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -60,6 +61,8 @@ public class CrashActivity extends AppCompatActivity {
                 share();
             }
         });
+
+        Log.e("CrashHunter", info.toString());
     }
 
     private void share() {
