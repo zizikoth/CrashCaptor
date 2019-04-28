@@ -1,8 +1,8 @@
 package com.memo.crashhunter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -16,7 +16,7 @@ import com.memo.hunter.R;
  * @author zhou
  * @date 2019-02-12 19:53
  */
-public class CrashActivity extends AppCompatActivity {
+public class CrashActivity extends Activity {
 
 
     private CrashInfo info;
@@ -25,7 +25,9 @@ public class CrashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crash);
-
+        if (getActionBar() != null) {
+            getActionBar().hide();
+        }
         info = CrashHunter.getCrashInfo(getIntent());
         if (info == null) {
             return;

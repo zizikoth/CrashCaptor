@@ -10,6 +10,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="点击测试" />
+        android:text="点击测试,第一次点击跳转新页面，第二次点击抛出崩溃" />
 
 </FrameLayout>

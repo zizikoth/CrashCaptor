@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 
 import java.text.SimpleDateFormat;
 
@@ -131,7 +130,6 @@ public class CrashInfo implements Parcelable {
         this.version = version;
     }
 
-    @NonNull
     @Override
     public String toString() {
         return "崩溃信息: " + "\n" + this.getExceptionMsg() + "\n\n" +
@@ -149,7 +147,7 @@ public class CrashInfo implements Parcelable {
     /**
      * 系统版本号
      */
-    private String version = "Api " + String.valueOf(Build.VERSION.SDK_INT);
+    private String version = "Api " + Build.VERSION.SDK_INT;
 
     private CrashInfo(Parcel in) {
         this.exceptionMsg = in.readString();

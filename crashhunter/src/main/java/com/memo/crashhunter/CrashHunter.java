@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -25,7 +24,7 @@ public class CrashHunter implements Thread.UncaughtExceptionHandler {
     private static CrashHunter INSTANCE;
 
     /**
-     * ApplicationContext
+     * Application
      */
     private static Application mApplication;
 
@@ -126,7 +125,6 @@ public class CrashHunter implements Thread.UncaughtExceptionHandler {
      * @param intent Intent
      * @return 崩溃信息 CrashInfo
      */
-    @Nullable
     public static CrashInfo getCrashInfo(Intent intent) {
         try {
             return (CrashInfo) intent.getParcelableExtra(CRASH);

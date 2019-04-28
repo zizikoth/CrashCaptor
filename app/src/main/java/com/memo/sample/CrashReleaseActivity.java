@@ -1,7 +1,7 @@
 package com.memo.sample;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 
@@ -12,7 +12,7 @@ import android.view.View;
  * @author zhou
  * @date 2019-02-13 11:59
  */
-public class CrashReleaseActivity extends AppCompatActivity {
+public class CrashReleaseActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -24,7 +24,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center_vertical|end"
-            android:background="?selectableItemBackgroundBorderless"
             android:padding="13dp"
             android:src="@drawable/ic_share" />
     </FrameLayout>
