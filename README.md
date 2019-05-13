@@ -44,7 +44,7 @@ Step 2.注意版本号
 [![](https://jitpack.io/v/zmemo/CrashHunter.svg)](https://jitpack.io/#zmemo/CrashHunter)
 ```
 	dependencies {
-	        implementation 'com.github.zmemo:CrashHunter:1.0.1'
+	        implementation 'com.github.zmemo:CrashHunter:x.y.z'
 	}
 ````
 Step 3. 在Application中初始化
