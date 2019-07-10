@@ -132,16 +132,16 @@ public class CrashInfo implements Parcelable {
 
     @Override
     public String toString() {
-        return "崩溃信息: " + "\n" + this.getExceptionMsg() + "\n\n" +
-                "文件: " + this.getFileName() + "\n\n" +
-                "类名: " + this.getClassName() + "\n\n" +
-                "方法: " + this.getMethodName() + "\n\n" +
-                "行数: " + this.getLineNumber() + "\n\n" +
-                "类型: " + this.getExceptionType() + "\n\n" +
-                "时间: " + this.getTime() + "\n\n" +
-                "设备名称: " + this.getModel() + "\n\n" +
-                "设备厂商: " + this.getBrand() + "\n\n" +
-                "系统版本: " + this.getVersion() + "\n\n" +
+        return "崩溃信息: " + "\n" + this.getExceptionMsg() + "\n" +
+                "文件: " + this.getFileName() + "\n" +
+                "类名: " + this.getClassName() + "\n" +
+                "方法: " + this.getMethodName() + "\n" +
+                "行数: " + this.getLineNumber() + "\n" +
+                "类型: " + this.getExceptionType() + "\n" +
+                "时间: " + this.getTime() + "\n" +
+                "设备名称: " + this.getModel() + "\n" +
+                "设备厂商: " + this.getBrand() + "\n" +
+                "系统版本: " + this.getVersion() + "\n" +
                 "全部信息: " + "\n" + this.getFullException() + "\n";
     }
     /**

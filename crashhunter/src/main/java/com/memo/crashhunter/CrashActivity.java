@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.memo.hunter.BuildConfig;
 import com.memo.hunter.R;
 
 /**
@@ -64,7 +65,9 @@ public class CrashActivity extends Activity {
             }
         });
 
-        Log.e("CrashHunter", info.toString());
+        if (BuildConfig.DEBUG) {
+            Log.e("CrashHunter", info.toString());
+        }
     }
 
     private void share() {
