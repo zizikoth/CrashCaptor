@@ -1,9 +1,0 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.memo.hunter">
-
-    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
-    
-    <application>
-        <activity android:name="com.memo.crashhunter.CrashActivity" />
-    </application>
-</manifest>

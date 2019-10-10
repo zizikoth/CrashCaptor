@@ -1,4 +1,4 @@
-package com.memo.crashhunter;
+package com.memo.captor;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,8 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.memo.hunter.BuildConfig;
-import com.memo.hunter.R;
 
 /**
  * title:崩溃展示界面
@@ -29,7 +27,7 @@ public class CrashActivity extends Activity {
         if (getActionBar() != null) {
             getActionBar().hide();
         }
-        info = CrashHunter.getCrashInfo(getIntent());
+        info = CrashCaptor.getCrashInfo(getIntent());
         if (info == null) {
             return;
         }

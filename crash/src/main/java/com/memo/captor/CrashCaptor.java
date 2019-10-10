@@ -1,4 +1,4 @@
-package com.memo.crashhunter;
+package com.memo.captor;
 
 import android.app.Activity;
 import android.app.Application;
@@ -16,12 +16,12 @@ import java.util.Stack;
  * @author zhou
  * @date 2019-02-12 20:07
  */
-public class CrashHunter implements Thread.UncaughtExceptionHandler {
+public class CrashCaptor implements Thread.UncaughtExceptionHandler {
 
     /**
      * 当前实例
      */
-    private static CrashHunter INSTANCE;
+    private static CrashCaptor INSTANCE;
 
     /**
      * Application
@@ -59,7 +59,7 @@ public class CrashHunter implements Thread.UncaughtExceptionHandler {
     /**
      * 私有化实例
      */
-    private CrashHunter(Application application) {
+    private CrashCaptor(Application application) {
         mApplication = application;
         mActivityStack = new Stack<>();
         Thread.setDefaultUncaughtExceptionHandler(this);
@@ -74,29 +74,19 @@ public class CrashHunter implements Thread.UncaughtExceptionHandler {
             }
 
             @Override
-            public void onActivityStarted(Activity activity) {
-
-            }
+            public void onActivityStarted(Activity activity) { }
 
             @Override
-            public void onActivityResumed(Activity activity) {
-
-            }
+            public void onActivityResumed(Activity activity) { }
 
             @Override
-            public void onActivityPaused(Activity activity) {
-
-            }
+            public void onActivityPaused(Activity activity) { }
 
             @Override
-            public void onActivityStopped(Activity activity) {
-
-            }
+            public void onActivityStopped(Activity activity) { }
 
             @Override
-            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-
-            }
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) { }
 
             @Override
             public void onActivityDestroyed(Activity activity) {
@@ -105,16 +95,19 @@ public class CrashHunter implements Thread.UncaughtExceptionHandler {
         });
     }
 
-
     /**
      * 初始化
      *
      * @param application Application
      * @return 当前实例 INSTANCE
      */
-    public static CrashHunter init(Application application) {
+    public static CrashCaptor init(Application application) {
         if (INSTANCE == null) {
-            INSTANCE = new CrashHunter(application);
+            synchronized (CrashCaptor.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new CrashCaptor(application);
+                }
+            }
         }
         return INSTANCE;
     }
@@ -139,7 +132,7 @@ public class CrashHunter implements Thread.UncaughtExceptionHandler {
      * @param isDebug 是否为测试模式
      * @return 当前实例 INSTANCE
      */
-    public CrashHunter isDebug(boolean isDebug) {
+    public CrashCaptor isDebug(boolean isDebug) {
         this.isDebug = isDebug;
         return this;
     }
@@ -156,7 +149,7 @@ public class CrashHunter implements Thread.UncaughtExceptionHandler {
      * @see CrashModeEnum#MODE_CRASH_SHOW_DEBUG
      * 测试展示CrashActivity 线上不展示
      */
-    public CrashHunter setCrashMode(CrashModeEnum crashModeEnum) {
+    public CrashCaptor setCrashMode(CrashModeEnum crashModeEnum) {
         this.crashModeEnum = crashModeEnum;
         return this;
     }
@@ -169,7 +162,7 @@ public class CrashHunter implements Thread.UncaughtExceptionHandler {
      *                             注意判空
      * @return 当前实例 INSTANCE
      */
-    public CrashHunter setReleaseCrashActivity(Class<? extends Activity> releaseCrashActivity) {
+    public CrashCaptor setReleaseCrashActivity(Class<? extends Activity> releaseCrashActivity) {
         this.releaseCrashActivity = releaseCrashActivity;
         return this;
     }
@@ -194,7 +187,7 @@ public class CrashHunter implements Thread.UncaughtExceptionHandler {
         }
         finishAllActivity();
         android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(0);
+        System.exit(10);
     }
 
     /**
@@ -216,7 +209,7 @@ public class CrashHunter implements Thread.UncaughtExceptionHandler {
             pw.flush();
             String exceptionType = exception.getClass().getName();
 
-            if (exception.getStackTrace() != null && exception.getStackTrace().length > 0) {
+            if (exception.getStackTrace().length > 0) {
                 StackTraceElement element = exception.getStackTrace()[0];
                 crashInfo.setLineNumber(element.getLineNumber());
                 crashInfo.setFileName(element.getFileName());
@@ -242,6 +235,8 @@ public class CrashHunter implements Thread.UncaughtExceptionHandler {
             }
         }
         mActivityStack.clear();
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(10);
     }
 
     /**
@@ -252,7 +247,7 @@ public class CrashHunter implements Thread.UncaughtExceptionHandler {
      */
     private void navigation(Class<? extends Activity> clazz, CrashInfo info) {
         Intent intent = new Intent(mApplication.getApplicationContext(), clazz);
-        intent.putExtra(CrashHunter.CRASH, info);
+        intent.putExtra(CrashCaptor.CRASH, info);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mApplication.getApplicationContext().startActivity(intent);
     }

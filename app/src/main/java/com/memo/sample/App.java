@@ -2,8 +2,8 @@ package com.memo.sample;
 
 import android.app.Application;
 
-import com.memo.crashhunter.CrashHunter;
-import com.memo.crashhunter.CrashModeEnum;
+import com.memo.captor.CrashCaptor;
+import com.memo.captor.CrashModeEnum;
 
 /**
  * title:Application
@@ -14,12 +14,10 @@ import com.memo.crashhunter.CrashModeEnum;
  */
 public class App extends Application {
 
-    public static int OPEN_NUM = 0;
-
     @Override
     public void onCreate() {
         super.onCreate();
-        CrashHunter.init(this)
+        CrashCaptor.init(this)
                 .setCrashMode(CrashModeEnum.MODE_CRASH_SHOW_DEBUG_AND_RELEASE)
                 .setReleaseCrashActivity(CrashReleaseActivity.class)
                 .isDebug(BuildConfig.DEBUG);

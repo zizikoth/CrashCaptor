@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center"
+    android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.memo.sample.MainActivity">
 
     <Button
-        android:id="@+id/btn_crash"
+        android:id="@+id/btn_crash_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="点击测试,第一次点击跳转新页面，第二次点击抛出崩溃" />
+        android:text="主线程崩溃" />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/btn_crash_thread"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="子线程崩溃" />
+
+</LinearLayout>

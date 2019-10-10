@@ -1,4 +1,4 @@
-package com.memo.crashhunter;
+package com.memo.captor;
 
 import android.annotation.SuppressLint;
 import android.os.Build;

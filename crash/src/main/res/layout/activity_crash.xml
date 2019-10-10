@@ -28,7 +28,7 @@
             android:src="@drawable/ic_share" />
     </FrameLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <ScrollView
         android:fillViewport="true"
         android:overScrollMode="never"
         android:layout_width="match_parent"
@@ -277,5 +277,5 @@
                 android:textColor="@color/colorAccent"
                 android:textSize="18sp" />
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </ScrollView>
 </LinearLayout>

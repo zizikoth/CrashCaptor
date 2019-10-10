@@ -1,8 +1,7 @@
 package com.memo.sample;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 /**
@@ -12,20 +11,27 @@ import android.view.View;
  * @author zhou
  * @date 2019-02-12 19:50
  */
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findViewById(R.id.btn_crash).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_crash_main).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (++App.OPEN_NUM > 1) {
-                    throw new RuntimeException("Boom! sha ka la ka!");
-                } else {
-                    startActivity(new Intent(MainActivity.this, MainActivity.class));
-                }
+                throw new RuntimeException("主线程崩溃");
+            }
+        });
+        findViewById(R.id.btn_crash_thread).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        throw new RuntimeException("子线程崩溃");
+                    }
+                }).start();
             }
         });
     }

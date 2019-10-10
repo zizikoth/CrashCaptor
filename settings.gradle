@@ -1,1 +1,1 @@
-include ':app', ':crashhunter'
+include ':app', ':crash'
