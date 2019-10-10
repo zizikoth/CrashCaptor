@@ -41,20 +41,16 @@ Step 1
 	}
 ```
 Step 2.注意版本号
-[![](https://jitpack.io/v/zmemo/CrashHunter.svg)](https://jitpack.io/#zmemo/CrashHunter)
+[![](https://jitpack.io/v/zmemo/CrashCaptor.svg)](https://jitpack.io/#zmemo/CrashCaptor)
 ```
 	dependencies {
-	        implementation 'com.github.zmemo:CrashHunter:x.y.z'
+	        implementation 'com.github.zmemo:CrashCaptor:x.y.z'
 	}
 ````
 Step 3. 在Application中初始化
 ```
-        CrashHunter.init(this)
-                .setCrashMode(CrashModeEnum.MODE_CRASH_SHOW_DEBUG_AND_RELEASE)//非必须 和下方对应
-                .setReleaseCrashActivity(CrashReleaseActivity.class)//非必须 和上方对应
-                .isDebug(BuildConfig.DEBUG);//必须 默认为不显示崩溃界面
+        CrashCaptor.init(this)
+                .setCrashMode(CrashModeEnum.MODE_CRASH_SHOW_DEBUG_AND_RELEASE)
+                .setReleaseCrashActivity(CrashReleaseActivity.class)
+                .isDebug(BuildConfig.DEBUG);
 ```
-### 七.详细代码
-[由于代码还是比较简单，就不贴出来了，放个Github网址：CrashHunter](https://github.com/zmemo/CrashHunter)
-### 八.惯例
-[发现一个Github 6K+的项目，说不定就为你打开异世界的大门](https://github.com/komeiji-satori/Dress)
