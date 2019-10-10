@@ -54,3 +54,9 @@ Step 3. 在Application中初始化
                 .setReleaseCrashActivity(CrashReleaseActivity.class)
                 .isDebug(BuildConfig.DEBUG);
 ```
+Step 4. 清单文件中配置崩溃展示界面的 `process`
+```
+<activity
+            android:name=".CrashReleaseActivity"
+            android:process=":crash" />
+```
